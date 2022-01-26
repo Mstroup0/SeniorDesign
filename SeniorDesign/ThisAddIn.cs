@@ -6,6 +6,7 @@ using System.Xml.Linq;
 using Word = Microsoft.Office.Interop.Word;
 using Office = Microsoft.Office.Core;
 using Microsoft.Office.Tools.Word;
+using System.Diagnostics;
 
 namespace SeniorDesign
 {
@@ -13,12 +14,23 @@ namespace SeniorDesign
     {
         private void ThisAddIn_Startup(object sender, System.EventArgs e)
         {
-        }
+
+            
+        
+            }
 
         private void ThisAddIn_Shutdown(object sender, System.EventArgs e)
         {
         }
 
+        static public string context_Doc()
+        {
+            string textFromDoc = Globals.ThisAddIn.Application.ActiveDocument.Range().Text;
+            string text = "";
+            text += textFromDoc;
+            Debug.WriteLine( "testing",text);
+            return text;
+        }
         #region VSTO generated code
 
         /// <summary>

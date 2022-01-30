@@ -13,8 +13,8 @@ namespace SeniorDesign
             : base(Globals.Factory.GetRibbonFactory())
         {
             InitializeComponent();
-            dataSet = new TrainedDataSet();
-            IsDatasetDirty = false;
+           // dataSet = new TrainedDataSet();
+           // IsDatasetDirty = false;
         }
 
         /// <summary> 

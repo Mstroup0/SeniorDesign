@@ -9,6 +9,7 @@ using Word = Microsoft.Office.Interop.Word;
 using System.Windows.Forms;
 using System.Diagnostics;
 
+
 namespace SeniorDesign
 {
     public partial class Ribbon1
@@ -17,60 +18,20 @@ namespace SeniorDesign
         bool IsDatasetDirty { get; set; }
         TrainedDataSet dataSet { get; set; }
 
-
-
         private void Ribbon1_Load(object sender, RibbonUIEventArgs e)
         {
 
         }
-
         private void toggleButton1_Click(object sender, RibbonControlEventArgs e)
         {
 
 
         }
         private void button2_Click(object sender, RibbonControlEventArgs e)
-        {
+       {
             OpenDataSet();
-            Microsoft.Office.Interop.Word._Document oDoc = Globals.ThisAddIn.Application.ActiveDocument;
-            Word.Paragraph objPare;
-            objPare = oDoc.Paragraphs.Add();
-
-            string docCon = "";
-            docCon += " " + ThisAddIn.context_Doc();
-            Debug.Write("testing Doc: ", docCon);
-
-
-            //error Is occuring here the lastword will not display in the debug output.
-            // data is disappearing
-            // Once fix words should predict. 
-            var lastWord = "";
-            Debug.Write("testing Doc: ", docCon);
-            lastWord += "" + docCon;
-            Debug.Write("testing Doc: ", docCon);
-
-            Debug.Write("testing2: ", lastWord);
-
-            Debug.Write("testing Doc: ", docCon);
-            //objPare.Range.Text = lastWord; Testing
-            string suggestedWord = "";
-                suggestedWord += dataSet.SuggestNext(lastWord);
-            Debug.Write("Suggested word: ", suggestedWord);
-            IEnumerable<string> suggestedWords = dataSet.Next4Words(lastWord, 4);
-
-            docCon += " " + suggestedWord;
-
-           // foreach (string word in suggestedWords)
-              //  {
-                    //objPare.Range.Text = string.Concat(" ", suggestedWord);
-                    //tbOutput.AppendText(string.Concat(" ", word));
-                    //objPare.Range.Text.AppendText(string.Concat(" ", word));
-               // }
-            //objPare.Range.Text = textFromDoc;
-            //objPare.Range.Text = docCon;
-           // Debug.Write("testing2: ", lastWord);
-           // Debug.Write("testing Doc: ", docCon);
-
+            Globals.ThisAddIn.Suggest(); 
+            
         }
 
         private bool AskIfSaveFirst()

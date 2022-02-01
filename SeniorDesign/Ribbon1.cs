@@ -29,10 +29,43 @@ namespace SeniorDesign
         }
         private void button2_Click(object sender, RibbonControlEventArgs e)
        {
+            dataSet = new TrainedDataSet();
+            IsDatasetDirty = false;
             OpenDataSet();
             Globals.ThisAddIn.Suggest(); 
             
         }
+
+        private void OnDataSetLoaded()
+        {
+            labelTotalWords.Visible = true;
+            labelUniqueWords.Visible = true;
+            IsDatasetDirty = false;
+            UpdateLabels();
+        }
+        private void UpdateLabels()
+        {
+            labelTotalWords.Label = string.Format("{0} Total Words", dataSet.TotalSampleSize);
+            labelUniqueWords.Label = string.Format("{0} Unique Words", dataSet.UniqueWordCount);
+        }
+        private void OpenDataSet()
+        {
+            if (AskIfSaveFirst())
+            {
+                //string selectedFile = ShowFileDialog(openFileDialog);
+                string selectedFile = "C:\\Users\\kuro0\\source\\repos\\SeniorDesign\\SeniorDesign\\Texts\\Dictionary.txt";
+                //Debug.WriteLine("file " + selectedFile);
+                if (!string.IsNullOrWhiteSpace(selectedFile) && File.Exists(selectedFile))
+                {
+                    dataSet = TrainedDataSet.DeserializeFromXml(selectedFile);
+                    if (dataSet != null)
+                    {
+                        OnDataSetLoaded();
+                    }
+                }
+            }
+        }
+
 
         private bool AskIfSaveFirst()
         {
@@ -69,28 +102,6 @@ namespace SeniorDesign
                     IsDatasetDirty = false;
                 }
             }
-        }
-        private void OnDataSetLoaded()
-        {
-            labelTotalWords.Visible = true;
-            labelUniqueWords.Visible = true;
-            IsDatasetDirty = false;
-            UpdateLabels();
-        }
-        private void UpdateLabels()
-        {
-            labelTotalWords.Label = string.Format("{0} Total Words", dataSet.TotalSampleSize);
-            labelUniqueWords.Label = string.Format("{0} Unique Words", dataSet.UniqueWordCount);
-        }
-        private void OpenDataSet()
-        {
-            //if (AskIfSaveFirst())
-            //{
-                string selectedFile = "C:\\Users\\kuro0\\source\\repos\\SeniorDesign\\SeniorDesign\\Texts\\Dictionary.txt";
-                    dataSet = TrainedDataSet.DeserializeFromXml(selectedFile);
-                    OnDataSetLoaded();
-
-            //}
         }
 
         /*

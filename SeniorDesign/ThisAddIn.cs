@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Xml.Linq;
-using Word = Microsoft.Office.Interop.Word;
-using Office = Microsoft.Office.Core;
-using Microsoft.Office.Tools.Word;
+﻿using Word = Microsoft.Office.Interop.Word;
 using System.Diagnostics;
-using Microsoft.Office.Tools.Ribbon;
 using WordPredictionLibrary.Core;
+using System.Windows.Forms;
 using System.IO;
-using System.Diagnostics;
+using System;
+using System.Linq;
+using System.Collections.Generic;
 
 namespace SeniorDesign
 {
@@ -21,7 +16,8 @@ namespace SeniorDesign
 
         private void ThisAddIn_Startup(object sender, System.EventArgs e)
         {
-         }
+            dataSet = new TrainedDataSet();
+        }
         private void ThisAddIn_Shutdown(object sender, System.EventArgs e)
         {
         }
@@ -39,44 +35,94 @@ namespace SeniorDesign
             OpenDataSet();
             Microsoft.Office.Interop.Word._Document oDoc = Globals.ThisAddIn.Application.ActiveDocument;
             Word.Paragraph objPare;
-            objPare = oDoc.Paragraphs.Add();
+             objPare = oDoc.Paragraphs.Add();
 
-            string docCon = "";
-            docCon += " " + Context_Doc();
+            var docCon =  Context_Doc();
+            string docConT = docCon;
 
+            string docCon2 = docCon;
+            docCon2 = String.Concat(docCon.Where(c => !Char.IsWhiteSpace(c)));
+            var lastW =  docCon2;
 
-            //error Is occuring here the lastword will not display in the debug output.
-            // data is disappearing
-            // Once fix words should predict. 
-            string last = "";
-            last += String.Concat( Context_Doc());
+            Debug.Write("testing Doc:" + lastW);
+            string suggestedWord = dataSet.SuggestNext(lastW);
 
-            Debug.Write("testing Doc: ", docCon);
-            Debug.WriteLine("testing2: ", last);
-            //objPare.Range.Text = lastWord; Testing
-            string suggestedWord = "";
-            suggestedWord += dataSet.SuggestNext(docCon);
+            Debug.WriteLine("Suggested word:" + suggestedWord);
+            IEnumerable<string> suggestedWords = dataSet.Next4Words(lastW, 4);
 
-            Debug.WriteLine("Suggested word: ", suggestedWord);
-            Debug.WriteLine("testing Doc: ", docCon);
+            string suggests = " ";
+            foreach (string word in suggestedWords)
+            {
+                suggests += " " + word;
+                Debug.WriteLine("Suggested word:" + suggests);
+            }
 
-            IEnumerable<string> suggestedWords = dataSet.Next4Words(last, 4);
+           // docConT += " " + suggestedWord;
+            docConT += " " + suggests;
 
-            docCon += " " + suggestedWord;
-
-            //return suggestedWord;
+            objPare.Range.Text += docConT;
         }
 
         private void OpenDataSet()
         {
-            //if (AskIfSaveFirst())
-            //{
-            string selectedFile = "C:\\Users\\kuro0\\source\\repos\\SeniorDesign\\SeniorDesign\\Texts\\Dictionary.txt";
-            dataSet = TrainedDataSet.DeserializeFromXml(selectedFile);
-
-            //}
+            if (AskIfSaveFirst())
+            {
+                //string selectedFile = ShowFileDialog(openFileDialog);
+                string selectedFile = "C:\\Users\\kuro0\\source\\repos\\SeniorDesign\\SeniorDesign\\Texts\\Dictionary.txt";
+                Debug.WriteLine("file " + selectedFile);
+                if (!string.IsNullOrWhiteSpace(selectedFile) && File.Exists(selectedFile))
+                {
+                    dataSet = TrainedDataSet.DeserializeFromXml(selectedFile);
+                    if (dataSet != null)
+                    {
+                        OnDataSetLoaded();
+                    }
+                }
+            }
         }
 
+        private void OnDataSetLoaded()
+        {
+            IsDatasetDirty = false;
+        }
+
+        private bool AskIfSaveFirst()
+        {
+            if (dataSet != null && dataSet.TotalSampleSize > 1)
+            {
+                if (IsDatasetDirty)
+                {
+                    DialogResult result = MessageBox.Show("Do you wish to save current Trained Data Set?", "Save?", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+
+                    switch (result)
+                    {
+                        case DialogResult.Yes:
+                            SaveDataSet();
+                            break;
+
+                        case DialogResult.No:
+                            break;
+
+                        case DialogResult.Cancel:
+                        default:
+                            return false;
+                    }
+                }
+            }
+            return true;
+        }
+
+        private void SaveDataSet()
+        {
+            string selectedFile = "C:\\Users\\kuro0\\source\\repos\\SeniorDesign\\SeniorDesign\\Texts\\Dictionary.txt";
+            if (!string.IsNullOrWhiteSpace(selectedFile))
+            {
+                if (TrainedDataSet.SerializeToXml(dataSet, selectedFile))
+                {
+                    IsDatasetDirty = false;
+                }
+            }
+        }
 
         #region VSTO generated code
 

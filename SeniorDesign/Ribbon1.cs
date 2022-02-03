@@ -22,6 +22,7 @@ namespace SeniorDesign
         {
 
         }
+        // start/stop button
         private void toggleButton1_Click(object sender, RibbonControlEventArgs e)
         {
 
@@ -35,6 +36,7 @@ namespace SeniorDesign
             Globals.ThisAddIn.Suggest(); 
             
         }
+
 
         private void OnDataSetLoaded()
         {
@@ -102,6 +104,32 @@ namespace SeniorDesign
                     IsDatasetDirty = false;
                 }
             }
+        }
+
+        private void button1_Click(object sender, RibbonControlEventArgs e)
+        {
+            string suggestion1 = Globals.ThisAddIn.arrayWords(0);
+           // button1.Label = suggestion1;
+
+        }
+
+        private void button3_Click_1(object sender, RibbonControlEventArgs e)
+        {
+            string suggestion2 = Globals.ThisAddIn.arrayWords(1);
+           // button3.Label = suggestion2;
+        }
+
+        private void button4_Click(object sender, RibbonControlEventArgs e)
+        {
+            string suggestion3 = Globals.ThisAddIn.arrayWords(2);
+           // button4.Label = suggestion3;
+
+        }
+
+        private void button5_Click(object sender, RibbonControlEventArgs e)
+        {
+            string suggestion4 = Globals.ThisAddIn.arrayWords(3);
+           // button4.Label = suggestion2;
         }
 
         /*

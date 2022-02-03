@@ -13,6 +13,7 @@ namespace SeniorDesign
     {
         bool IsDatasetDirty { get; set; }
         TrainedDataSet dataSet { get; set; }
+        private IEnumerable<string> words;
 
         private void ThisAddIn_Startup(object sender, System.EventArgs e)
         {
@@ -49,6 +50,7 @@ namespace SeniorDesign
 
             Debug.WriteLine("Suggested word:" + suggestedWord);
             IEnumerable<string> suggestedWords = dataSet.Next4Words(lastW, 4);
+            words = suggestedWords;
 
             string suggests = " ";
             foreach (string word in suggestedWords)
@@ -123,6 +125,13 @@ namespace SeniorDesign
                 }
             }
         }
+
+        public string arrayWords(int pos)
+        {
+            IEnumerable<string> suggestedWords = words;
+            return suggestedWords.ElementAt(pos);
+        }
+
 
         #region VSTO generated code
 

@@ -41,8 +41,6 @@ namespace SeniorDesign
             Microsoft.Office.Tools.Ribbon.RibbonGroup group1;
             this.toggleButton1 = this.Factory.CreateRibbonToggleButton();
             this.tab1 = this.Factory.CreateRibbonTab();
-            this.group2 = this.Factory.CreateRibbonGroup();
-            this.button2 = this.Factory.CreateRibbonButton();
             this.group3 = this.Factory.CreateRibbonGroup();
             this.labelTotalWords = this.Factory.CreateRibbonLabel();
             this.labelUniqueWords = this.Factory.CreateRibbonLabel();
@@ -57,7 +55,6 @@ namespace SeniorDesign
             group1 = this.Factory.CreateRibbonGroup();
             group1.SuspendLayout();
             this.tab1.SuspendLayout();
-            this.group2.SuspendLayout();
             this.group3.SuspendLayout();
             this.group4.SuspendLayout();
             this.group5.SuspendLayout();
@@ -83,7 +80,6 @@ namespace SeniorDesign
             // 
             this.tab1.ControlId.ControlIdType = Microsoft.Office.Tools.Ribbon.RibbonControlIdType.Office;
             this.tab1.Groups.Add(group1);
-            this.tab1.Groups.Add(this.group2);
             this.tab1.Groups.Add(this.group3);
             this.tab1.Groups.Add(this.group4);
             this.tab1.Groups.Add(this.group5);
@@ -92,20 +88,6 @@ namespace SeniorDesign
             this.tab1.Label = "Senior Design";
             this.tab1.Name = "tab1";
             this.tab1.Tag = "";
-            // 
-            // group2
-            // 
-            this.group2.Items.Add(this.button2);
-            this.group2.Label = "Words";
-            this.group2.Name = "group2";
-            // 
-            // button2
-            // 
-            this.button2.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
-            this.button2.Label = "Test";
-            this.button2.Name = "button2";
-            this.button2.ShowImage = true;
-            this.button2.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.button2_Click);
             // 
             // group3
             // 
@@ -192,8 +174,6 @@ namespace SeniorDesign
             group1.PerformLayout();
             this.tab1.ResumeLayout(false);
             this.tab1.PerformLayout();
-            this.group2.ResumeLayout(false);
-            this.group2.PerformLayout();
             this.group3.ResumeLayout(false);
             this.group3.PerformLayout();
             this.group4.ResumeLayout(false);
@@ -212,8 +192,6 @@ namespace SeniorDesign
 
         internal Microsoft.Office.Tools.Ribbon.RibbonTab tab1;
         internal Microsoft.Office.Tools.Ribbon.RibbonToggleButton toggleButton1;
-        internal Microsoft.Office.Tools.Ribbon.RibbonButton button2;
-        internal Microsoft.Office.Tools.Ribbon.RibbonGroup group2;
         internal Microsoft.Office.Tools.Ribbon.RibbonGroup group3;
         internal Microsoft.Office.Tools.Ribbon.RibbonLabel labelTotalWords;
         internal Microsoft.Office.Tools.Ribbon.RibbonLabel labelUniqueWords;

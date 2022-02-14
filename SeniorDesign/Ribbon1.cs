@@ -25,10 +25,17 @@ namespace SeniorDesign
         // start/stop button
         private void toggleButton1_Click(object sender, RibbonControlEventArgs e)
         {
-
+            dataSet = new TrainedDataSet();
+            IsDatasetDirty = false;
+            OpenDataSet();
+           // bool on = false;
+           // while (on == true)
+            //{
+                Globals.ThisAddIn.Suggest();
+            //}
 
         }
-        private void button2_Click(object sender, RibbonControlEventArgs e)
+      /*  private void button2_Click(object sender, RibbonControlEventArgs e)
        {
             dataSet = new TrainedDataSet();
             IsDatasetDirty = false;
@@ -36,7 +43,7 @@ namespace SeniorDesign
             Globals.ThisAddIn.Suggest(); 
             
         }
-
+      */
 
         private void OnDataSetLoaded()
         {
@@ -55,7 +62,7 @@ namespace SeniorDesign
             if (AskIfSaveFirst())
             {
                 //string selectedFile = ShowFileDialog(openFileDialog);
-                string selectedFile = "C:\\Users\\kuro0\\source\\repos\\SeniorDesign\\SeniorDesign\\Texts\\Dictionary.txt";
+                string selectedFile = "..\\..\\Texts\\Dictionary.txt";
                 //Debug.WriteLine("file " + selectedFile);
                 if (!string.IsNullOrWhiteSpace(selectedFile) && File.Exists(selectedFile))
                 {
@@ -108,67 +115,67 @@ namespace SeniorDesign
 
         private void button1_Click(object sender, RibbonControlEventArgs e)
         {
-            string suggestion1 = Globals.ThisAddIn.arrayWords(0);
-           // button1.Label = suggestion1;
+            string suggestion1 = Globals.ThisAddIn.arrayWords(1);
+            Globals.ThisAddIn.PUPrintWord(suggestion1);
 
         }
 
         private void button3_Click_1(object sender, RibbonControlEventArgs e)
         {
-            string suggestion2 = Globals.ThisAddIn.arrayWords(1);
-           // button3.Label = suggestion2;
+            string suggestion2 = Globals.ThisAddIn.arrayWords(2);
+            Globals.ThisAddIn.PUPrintWord(suggestion2);
         }
 
         private void button4_Click(object sender, RibbonControlEventArgs e)
         {
-            string suggestion3 = Globals.ThisAddIn.arrayWords(2);
-           // button4.Label = suggestion3;
+            string suggestion3 = Globals.ThisAddIn.arrayWords(3);
+            Globals.ThisAddIn.PUPrintWord(suggestion3);
 
         }
 
         private void button5_Click(object sender, RibbonControlEventArgs e)
         {
-            string suggestion4 = Globals.ThisAddIn.arrayWords(3);
-           // button4.Label = suggestion2;
+            string suggestion4 = Globals.ThisAddIn.arrayWords(4);
+            Globals.ThisAddIn.PUPrintWord(suggestion4);
+           
         }
 
-        /*
-    private void TrainDataSet()
-    {
-        string selectedFile = ShowFileDialog(openFileDialog);
-        if (!string.IsNullOrWhiteSpace(selectedFile) && File.Exists(selectedFile))
-        {
-            dataSet.Train(new FileInfo(selectedFile));
-
-            IsDatasetDirty = true;
-            UpdateLabels();
-        }
     }
 
-    private string ShowFileDialog(FileDialog dialog)
+    }
+
+/* OG print code
+  private void SelectionInsertText1() 
     {
-        if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+       Word.Selection currentSelection = Application.Selection;
+       bool userOvertype = Application.Options.Overtype;
+        if (Application.Options.Overtype)
         {
-            return dialog.FileName;
+            Application.Options.Overtype = false;
+        }
+
+        if (currentSelection.Type == Word.WdSelectionType.wdSelectionIP)
+        {
+            currentSelection.TypeText("Inserting at insertion point. ");
+            currentSelection.TypeParagraph();
+        }
+        else
+            if (currentSelection.Type == Word.WdSelectionType.wdSelectionNormal)
+        {
+            
+            if (Application.Options.ReplaceSelection)
+            {
+                object direction = Word.WdCollapseDirection.wdCollapseStart;
+                currentSelection.Collapse(ref direction);
+            }
+            currentSelection.TypeText("Inserting before a text block. ");
+            currentSelection.TypeParagraph();
         }
         else
         {
-            return string.Empty;
+            Do nothing.
         }
-    }
 
-    private void NewDataSet()
-    {
-        if (AskIfSaveFirst())
-        {
-            dataSet = new TrainedDataSet();
-            OnDataSetLoaded();
-        }
-    }
-
-    */
-    }
-
-    }
-
-
+ 
+        Application.Options.Overtype = userOvertype;
+*/

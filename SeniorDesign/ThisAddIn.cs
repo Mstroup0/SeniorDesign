@@ -6,6 +6,9 @@ using System.IO;
 using System;
 using System.Linq;
 using System.Collections.Generic;
+using System.Windows.Input;
+using System.Windows.Documents;
+using Microsoft.Office.Interop.Word;
 
 namespace SeniorDesign
 {
@@ -28,9 +31,11 @@ namespace SeniorDesign
             string textFromDoc = Globals.ThisAddIn.Application.ActiveDocument.Range().Text;
             string text = "";
             text += textFromDoc;
-           // Debug.WriteLine( "testing",text);
+            // Debug.WriteLine( "testing",text);
             return text;
         }
+
+     
         public void Suggest()
         {
             OpenDataSet();
@@ -42,10 +47,12 @@ namespace SeniorDesign
             string docConT = docCon;
 
             string docCon2 = docCon;
-            docCon2 = String.Concat(docCon.Where(c => !Char.IsWhiteSpace(c)));
-            var lastW =  docCon2;
 
-            Debug.Write("testing Doc:" + lastW);
+            string docConLast = docCon2.Split(new char[] { ' ', ',', '.', '?', '!', '\n'}).Last();
+            //docConLast = String.Concat(docCon.Where(c => !Char.IsWhiteSpace(c)));
+            var lastW =  docConLast;
+
+            Debug.WriteLine("testing Doc:" + lastW);
             string suggestedWord = dataSet.SuggestNext(lastW);
 
             Debug.WriteLine("Suggested word:" + suggestedWord);
@@ -56,13 +63,15 @@ namespace SeniorDesign
             foreach (string word in suggestedWords)
             {
                 suggests += " " + word;
+
                 Debug.WriteLine("Suggested word:" + suggests);
             }
 
            // docConT += " " + suggestedWord;
-            docConT += " " + suggests;
+           // docConT += " " + suggests;
 
-            objPare.Range.Text += docConT;
+           // objPare.Range.Text += docConT;
+          
         }
 
         private void OpenDataSet()
@@ -114,6 +123,85 @@ namespace SeniorDesign
             return true;
         }
 
+        public void PUPrintWord(string suggestion) => PrintWord(suggestion);
+        private void PrintWord(string suggestion) // Prints word at current possition
+        {
+            Word.Selection currentSelection = Application.Selection;
+
+            // Store the user's current Overtype selection
+            bool userOvertype = Application.Options.Overtype;
+
+            // Make sure Overtype is turned off.
+            if (Application.Options.Overtype)
+            {
+                Application.Options.Overtype = false;
+            }
+
+            // Test to see if selection is an insertion point.
+            if (currentSelection.Type == Word.WdSelectionType.wdSelectionIP)
+            {
+                currentSelection.TypeText(suggestion);
+                currentSelection.TypeParagraph();
+            }
+            else
+                if (currentSelection.Type == Word.WdSelectionType.wdSelectionNormal)
+            {
+                // Move to start of selection.
+                if (Application.Options.ReplaceSelection)
+                {
+                    object direction = Word.WdCollapseDirection.wdCollapseStart;
+                    currentSelection.Collapse(ref direction);
+                }
+                currentSelection.TypeText(suggestion);
+                currentSelection.TypeParagraph();
+            }
+            else
+            {
+                // Do nothing.
+            }
+
+            // Restore the user's Overtype selection
+            Application.Options.Overtype = userOvertype;
+        }
+
+        private void CursorPos1() // possiblility 2
+        {
+
+            Object wordObject = null;
+            Microsoft.Office.Interop.Word.Application word = null;
+            Document document = null;
+
+            try
+            {
+                wordObject = (Microsoft.Office.Interop.Word.Application)System.Runtime.InteropServices.Marshal.GetActiveObject("Word.Application");
+
+                word = (Microsoft.Office.Interop.Word.Application)wordObject;
+                word.Visible = false;
+                word.ScreenUpdating = false;
+                string fullPath = word.ActiveDocument.FullName;
+
+                document = word.ActiveDocument;
+
+                int count = document.Words.Count;
+                for (int k = 1; k <= count; k++)
+                {
+                    string text = document.Words[k].Text;
+                    MessageBox.Show(text);
+                }
+
+                if (document.Paragraphs.Count > 0)
+                {
+                    var paragraph = document.Paragraphs.First;
+                    var lastCharPos = paragraph.Range.Sentences.First.End - 1;
+                    MessageBox.Show(lastCharPos.ToString());
+                }
+            }
+            catch (Exception ex) { 
+            MessageBox.Show(ex.ToString());
+                }
+            }
+        
+        
         private void SaveDataSet()
         {
             string selectedFile = "C:\\Users\\kuro0\\source\\repos\\SeniorDesign\\SeniorDesign\\Texts\\Dictionary.txt";
@@ -148,3 +236,40 @@ namespace SeniorDesign
         #endregion
     }
 }
+
+
+/* OG print code
+  private void SelectionInsertText1() 
+    {
+       Word.Selection currentSelection = Application.Selection;
+       bool userOvertype = Application.Options.Overtype;
+        if (Application.Options.Overtype)
+        {
+            Application.Options.Overtype = false;
+        }
+
+        if (currentSelection.Type == Word.WdSelectionType.wdSelectionIP)
+        {
+            currentSelection.TypeText("Inserting at insertion point. ");
+            currentSelection.TypeParagraph();
+        }
+        else
+            if (currentSelection.Type == Word.WdSelectionType.wdSelectionNormal)
+        {
+            
+            if (Application.Options.ReplaceSelection)
+            {
+                object direction = Word.WdCollapseDirection.wdCollapseStart;
+                currentSelection.Collapse(ref direction);
+            }
+            currentSelection.TypeText("Inserting before a text block. ");
+            currentSelection.TypeParagraph();
+        }
+        else
+        {
+            Do nothing.
+        }
+
+ 
+        Application.Options.Overtype = userOvertype;
+*/

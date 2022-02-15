@@ -198,8 +198,7 @@ namespace SeniorDesign
             MessageBox.Show(ex.ToString());
                 }
             }
-        
-        
+           
         private void SaveDataSet()
         {
             string selectedFile = "C:\\Users\\kuro0\\Source\\Repos\\Mstroup0\\SeniorDesign\\SeniorDesign\\Texts\\Dictionary.txt";
@@ -211,18 +210,15 @@ namespace SeniorDesign
                 }
             }
         }
-
         public string arrayWords(int pos)
         {
             IEnumerable<string> suggestedWords = words;
             return suggestedWords.ElementAt(pos);
         }
-
         public IEnumerable<string> UpdateLabels()
         {
             return GetSuggestion();
         }
-
         private IEnumerable<string> GetSuggestion()
         {
             return words;

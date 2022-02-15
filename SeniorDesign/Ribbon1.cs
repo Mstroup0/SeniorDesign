@@ -1,13 +1,9 @@
 ﻿using Microsoft.Office.Tools.Ribbon;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using WordPredictionLibrary.Core;
 using System.IO;
-using Word = Microsoft.Office.Interop.Word;
+using System.Linq;
 using System.Windows.Forms;
-using System.Diagnostics;
+using WordPredictionLibrary.Core;
 
 
 namespace SeniorDesign
@@ -20,40 +16,40 @@ namespace SeniorDesign
 
         private void Ribbon1_Load(object sender, RibbonUIEventArgs e)
         {
-            toggleButton1.Label = string.Format("Start");
+            
         }
         // start/stop button
-        private void toggleButton1_Click(object sender, RibbonControlEventArgs e)
+        private void StartStop_Click(object sender, RibbonControlEventArgs e)
         {
             dataSet = new TrainedDataSet();
             IsDatasetDirty = false;
             OpenDataSet();
-           // bool on = false;
-           if(toggleButton1.Checked == true )
-           {
-                toggleButton1.Label = string.Format("Stop");
+            // bool on = false;
+            if (StartStop.Checked == true)
+            {
+                StartStop.Label = string.Format("Stop");
                 Globals.ThisAddIn.Suggest();
                 IEnumerable<string> labels = Globals.ThisAddIn.UpdateLabels();
-                button1.Label = string.Format(labels.ElementAt(0));
-                button3.Label = string.Format(labels.ElementAt(1));
-                button4.Label = string.Format(labels.ElementAt(2));
-                button5.Label = string.Format(labels.ElementAt(3));
+                b1Word.Label = string.Format(labels.ElementAt(0));
+                b2Word.Label = string.Format(labels.ElementAt(1));
+                b3Word.Label = string.Format(labels.ElementAt(2));
+                b4Word.Label = string.Format(labels.ElementAt(3));
             }
-           else
+            else
             {
-                toggleButton1.Label = string.Format("Start");
+                StartStop.Label = string.Format("Start");
             }
 
         }
-      /*  private void button2_Click(object sender, RibbonControlEventArgs e)
-       {
-            dataSet = new TrainedDataSet();
-            IsDatasetDirty = false;
-            OpenDataSet();
-            Globals.ThisAddIn.Suggest(); 
-            
-        }
-      */
+        /*  private void button2_Click(object sender, RibbonControlEventArgs e)
+         {
+              dataSet = new TrainedDataSet();
+              IsDatasetDirty = false;
+              OpenDataSet();
+              Globals.ThisAddIn.Suggest(); 
+
+          }
+        */
 
         private void OnDataSetLoaded()
         {
@@ -123,36 +119,36 @@ namespace SeniorDesign
             }
         }
 
-        private void button1_Click(object sender, RibbonControlEventArgs e)
+        private void b1Word_Click(object sender, RibbonControlEventArgs e)
         {
             string suggestion1 = Globals.ThisAddIn.arrayWords(0);
             Globals.ThisAddIn.PUPrintWord(suggestion1);
 
         }
 
-        private void button3_Click_1(object sender, RibbonControlEventArgs e)
+        private void b2Word_Click(object sender, RibbonControlEventArgs e)
         {
             string suggestion2 = Globals.ThisAddIn.arrayWords(1);
             Globals.ThisAddIn.PUPrintWord(suggestion2);
         }
 
-        private void button4_Click(object sender, RibbonControlEventArgs e)
+        private void b3Word_Click(object sender, RibbonControlEventArgs e)
         {
             string suggestion3 = Globals.ThisAddIn.arrayWords(2);
             Globals.ThisAddIn.PUPrintWord(suggestion3);
 
         }
 
-        private void button5_Click(object sender, RibbonControlEventArgs e)
+        private void b4Word_Click(object sender, RibbonControlEventArgs e)
         {
             string suggestion4 = Globals.ThisAddIn.arrayWords(3);
             Globals.ThisAddIn.PUPrintWord(suggestion4);
-           
+
         }
 
     }
 
-    }
+}
 
 /* OG print code
   private void SelectionInsertText1() 

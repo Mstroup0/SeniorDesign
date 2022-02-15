@@ -218,7 +218,15 @@ namespace SeniorDesign
             return suggestedWords.ElementAt(pos);
         }
 
+        public IEnumerable<string> UpdateLabels()
+        {
+            return GetSuggestion();
+        }
 
+        private IEnumerable<string> GetSuggestion()
+        {
+            return words;
+        }
         #region VSTO generated code
 
         /// <summary>

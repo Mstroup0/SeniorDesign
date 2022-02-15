@@ -20,7 +20,7 @@ namespace SeniorDesign
 
         private void Ribbon1_Load(object sender, RibbonUIEventArgs e)
         {
-
+            toggleButton1.Label = string.Format("Start");
         }
         // start/stop button
         private void toggleButton1_Click(object sender, RibbonControlEventArgs e)
@@ -29,10 +29,20 @@ namespace SeniorDesign
             IsDatasetDirty = false;
             OpenDataSet();
            // bool on = false;
-           // while (on == true)
-            //{
+           if(toggleButton1.Checked == true )
+           {
+                toggleButton1.Label = string.Format("Stop");
                 Globals.ThisAddIn.Suggest();
-            //}
+                IEnumerable<string> labels = Globals.ThisAddIn.UpdateLabels();
+                button1.Label = string.Format(labels.ElementAt(0));
+                button3.Label = string.Format(labels.ElementAt(1));
+                button4.Label = string.Format(labels.ElementAt(2));
+                button5.Label = string.Format(labels.ElementAt(3));
+            }
+           else
+            {
+                toggleButton1.Label = string.Format("Start");
+            }
 
         }
       /*  private void button2_Click(object sender, RibbonControlEventArgs e)

@@ -16,7 +16,7 @@ namespace SeniorDesign
     {
         bool IsDatasetDirty { get; set; }
         TrainedDataSet dataSet { get; set; }
-        private IEnumerable<string> words;
+        public IEnumerable<string> words;
 
         private void ThisAddIn_Startup(object sender, System.EventArgs e)
         {
@@ -45,26 +45,24 @@ namespace SeniorDesign
 
             var docCon =  Context_Doc();
             string docConT = docCon;
-
+            Debug.WriteLine("testing Doc:" + docCon);
             string docCon2 = docCon;
-
-            string docConLast = docCon2.Split(new char[] { ' ', ',', '.', '?', '!', '\n'}).Last();
-            //docConLast = String.Concat(docCon.Where(c => !Char.IsWhiteSpace(c)));
-            var lastW =  docConLast;
+            Debug.WriteLine("testing Doc:" + docCon2);
+            //string docConLast = docCon2.Split(new char[] { ' ', ',', '.', '?', '!', '\n'}).Last();
+            string docConLast2 = String.Concat(docCon2.Where(c => !Char.IsWhiteSpace(c)));
+            string lastW =  docConLast2;
 
             Debug.WriteLine("testing Doc:" + lastW);
             string suggestedWord = dataSet.SuggestNext(lastW);
 
-            Debug.WriteLine("Suggested word:" + suggestedWord);
+            Debug.WriteLine("1 Suggested word:" + suggestedWord);
             IEnumerable<string> suggestedWords = dataSet.Next4Words(lastW, 4);
             words = suggestedWords;
 
             string suggests = " ";
             foreach (string word in suggestedWords)
             {
-                suggests += " " + word;
-
-                Debug.WriteLine("Suggested word:" + suggests);
+                Debug.WriteLine("4 Suggested word:" + word);
             }
 
            // docConT += " " + suggestedWord;
@@ -79,7 +77,7 @@ namespace SeniorDesign
             if (AskIfSaveFirst())
             {
                 //string selectedFile = ShowFileDialog(openFileDialog);
-                string selectedFile = "C:\\Users\\kuro0\\source\\repos\\SeniorDesign\\SeniorDesign\\Texts\\Dictionary.txt";
+                string selectedFile = "C:\\Users\\kuro0\\Source\\Repos\\Mstroup0\\SeniorDesign\\SeniorDesign\\Texts\\Dictionary.txt";
                 Debug.WriteLine("file " + selectedFile);
                 if (!string.IsNullOrWhiteSpace(selectedFile) && File.Exists(selectedFile))
                 {
@@ -204,7 +202,7 @@ namespace SeniorDesign
         
         private void SaveDataSet()
         {
-            string selectedFile = "C:\\Users\\kuro0\\source\\repos\\SeniorDesign\\SeniorDesign\\Texts\\Dictionary.txt";
+            string selectedFile = "C:\\Users\\kuro0\\Source\\Repos\\Mstroup0\\SeniorDesign\\SeniorDesign\\Texts\\Dictionary.txt";
             if (!string.IsNullOrWhiteSpace(selectedFile))
             {
                 if (TrainedDataSet.SerializeToXml(dataSet, selectedFile))

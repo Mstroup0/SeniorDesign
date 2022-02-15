@@ -103,7 +103,7 @@ namespace SeniorDesign
         }
         private void SaveDataSet()
         {
-            string selectedFile = "C:\\Users\\kuro0\\source\\repos\\SeniorDesign\\SeniorDesign\\Texts\\Dictionary.txt";
+            string selectedFile = "..\\..\\..\\Texts\\Dictionary.txt";
             if (!string.IsNullOrWhiteSpace(selectedFile))
             {
                 if (TrainedDataSet.SerializeToXml(dataSet, selectedFile))
@@ -115,27 +115,27 @@ namespace SeniorDesign
 
         private void button1_Click(object sender, RibbonControlEventArgs e)
         {
-            string suggestion1 = Globals.ThisAddIn.arrayWords(1);
+            string suggestion1 = Globals.ThisAddIn.arrayWords(0);
             Globals.ThisAddIn.PUPrintWord(suggestion1);
 
         }
 
         private void button3_Click_1(object sender, RibbonControlEventArgs e)
         {
-            string suggestion2 = Globals.ThisAddIn.arrayWords(2);
+            string suggestion2 = Globals.ThisAddIn.arrayWords(1);
             Globals.ThisAddIn.PUPrintWord(suggestion2);
         }
 
         private void button4_Click(object sender, RibbonControlEventArgs e)
         {
-            string suggestion3 = Globals.ThisAddIn.arrayWords(3);
+            string suggestion3 = Globals.ThisAddIn.arrayWords(2);
             Globals.ThisAddIn.PUPrintWord(suggestion3);
 
         }
 
         private void button5_Click(object sender, RibbonControlEventArgs e)
         {
-            string suggestion4 = Globals.ThisAddIn.arrayWords(4);
+            string suggestion4 = Globals.ThisAddIn.arrayWords(3);
             Globals.ThisAddIn.PUPrintWord(suggestion4);
            
         }

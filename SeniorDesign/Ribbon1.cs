@@ -1,13 +1,9 @@
 ﻿using Microsoft.Office.Tools.Ribbon;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using WordPredictionLibrary.Core;
 using System.IO;
-using Word = Microsoft.Office.Interop.Word;
+using System.Linq;
 using System.Windows.Forms;
-using System.Diagnostics;
+using WordPredictionLibrary.Core;
 
 
 namespace SeniorDesign
@@ -20,23 +16,40 @@ namespace SeniorDesign
 
         private void Ribbon1_Load(object sender, RibbonUIEventArgs e)
         {
-
+            
         }
         // start/stop button
-        private void toggleButton1_Click(object sender, RibbonControlEventArgs e)
+        private void StartStop_Click(object sender, RibbonControlEventArgs e)
         {
-
-
-        }
-        private void button2_Click(object sender, RibbonControlEventArgs e)
-       {
             dataSet = new TrainedDataSet();
             IsDatasetDirty = false;
             OpenDataSet();
-            Globals.ThisAddIn.Suggest(); 
-            
-        }
+            // bool on = false;
+            if (StartStop.Checked == true)
+            {
+                StartStop.Label = string.Format("Stop");
+                Globals.ThisAddIn.Suggest();
+                IEnumerable<string> labels = Globals.ThisAddIn.UpdateLabels();
+                b1Word.Label = string.Format(labels.ElementAt(0));
+                b2Word.Label = string.Format(labels.ElementAt(1));
+                b3Word.Label = string.Format(labels.ElementAt(2));
+                b4Word.Label = string.Format(labels.ElementAt(3));
+            }
+            else
+            {
+                StartStop.Label = string.Format("Start");
+            }
 
+        }
+        /*  private void button2_Click(object sender, RibbonControlEventArgs e)
+         {
+              dataSet = new TrainedDataSet();
+              IsDatasetDirty = false;
+              OpenDataSet();
+              Globals.ThisAddIn.Suggest(); 
+
+          }
+        */
 
         private void OnDataSetLoaded()
         {
@@ -55,7 +68,7 @@ namespace SeniorDesign
             if (AskIfSaveFirst())
             {
                 //string selectedFile = ShowFileDialog(openFileDialog);
-                string selectedFile = "C:\\Users\\kuro0\\source\\repos\\SeniorDesign\\SeniorDesign\\Texts\\Dictionary.txt";
+                string selectedFile = "..\\..\\Texts\\Dictionary.txt";
                 //Debug.WriteLine("file " + selectedFile);
                 if (!string.IsNullOrWhiteSpace(selectedFile) && File.Exists(selectedFile))
                 {
@@ -96,7 +109,7 @@ namespace SeniorDesign
         }
         private void SaveDataSet()
         {
-            string selectedFile = "C:\\Users\\kuro0\\source\\repos\\SeniorDesign\\SeniorDesign\\Texts\\Dictionary.txt";
+            string selectedFile = "..\\..\\..\\Texts\\Dictionary.txt";
             if (!string.IsNullOrWhiteSpace(selectedFile))
             {
                 if (TrainedDataSet.SerializeToXml(dataSet, selectedFile))
@@ -106,69 +119,69 @@ namespace SeniorDesign
             }
         }
 
-        private void button1_Click(object sender, RibbonControlEventArgs e)
+        private void b1Word_Click(object sender, RibbonControlEventArgs e)
         {
             string suggestion1 = Globals.ThisAddIn.arrayWords(0);
-           // button1.Label = suggestion1;
+            Globals.ThisAddIn.PUPrintWord(suggestion1);
 
         }
 
-        private void button3_Click_1(object sender, RibbonControlEventArgs e)
+        private void b2Word_Click(object sender, RibbonControlEventArgs e)
         {
             string suggestion2 = Globals.ThisAddIn.arrayWords(1);
-           // button3.Label = suggestion2;
+            Globals.ThisAddIn.PUPrintWord(suggestion2);
         }
 
-        private void button4_Click(object sender, RibbonControlEventArgs e)
+        private void b3Word_Click(object sender, RibbonControlEventArgs e)
         {
             string suggestion3 = Globals.ThisAddIn.arrayWords(2);
-           // button4.Label = suggestion3;
+            Globals.ThisAddIn.PUPrintWord(suggestion3);
 
         }
 
-        private void button5_Click(object sender, RibbonControlEventArgs e)
+        private void b4Word_Click(object sender, RibbonControlEventArgs e)
         {
             string suggestion4 = Globals.ThisAddIn.arrayWords(3);
-           // button4.Label = suggestion2;
+            Globals.ThisAddIn.PUPrintWord(suggestion4);
+
         }
 
-        /*
-    private void TrainDataSet()
-    {
-        string selectedFile = ShowFileDialog(openFileDialog);
-        if (!string.IsNullOrWhiteSpace(selectedFile) && File.Exists(selectedFile))
-        {
-            dataSet.Train(new FileInfo(selectedFile));
-
-            IsDatasetDirty = true;
-            UpdateLabels();
-        }
     }
 
-    private string ShowFileDialog(FileDialog dialog)
+}
+
+/* OG print code
+  private void SelectionInsertText1() 
     {
-        if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+       Word.Selection currentSelection = Application.Selection;
+       bool userOvertype = Application.Options.Overtype;
+        if (Application.Options.Overtype)
         {
-            return dialog.FileName;
+            Application.Options.Overtype = false;
+        }
+
+        if (currentSelection.Type == Word.WdSelectionType.wdSelectionIP)
+        {
+            currentSelection.TypeText("Inserting at insertion point. ");
+            currentSelection.TypeParagraph();
+        }
+        else
+            if (currentSelection.Type == Word.WdSelectionType.wdSelectionNormal)
+        {
+            
+            if (Application.Options.ReplaceSelection)
+            {
+                object direction = Word.WdCollapseDirection.wdCollapseStart;
+                currentSelection.Collapse(ref direction);
+            }
+            currentSelection.TypeText("Inserting before a text block. ");
+            currentSelection.TypeParagraph();
         }
         else
         {
-            return string.Empty;
+            Do nothing.
         }
-    }
 
-    private void NewDataSet()
-    {
-        if (AskIfSaveFirst())
-        {
-            dataSet = new TrainedDataSet();
-            OnDataSetLoaded();
-        }
-    }
-
-    */
-    }
-
-    }
-
-
+ 
+        Application.Options.Overtype = userOvertype;
+*/

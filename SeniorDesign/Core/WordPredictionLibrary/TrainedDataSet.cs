@@ -5,6 +5,7 @@ using System.Xml.Linq;
 using System.Xml.XPath;
 using System.Collections.Generic;
 using System.Text;
+using System.Diagnostics;
 
 namespace WordPredictionLibrary.Core
 {
@@ -34,11 +35,14 @@ namespace WordPredictionLibrary.Core
 
 		public string SuggestNext(string currentWord)
 		{
+			Debug.WriteLine("current: " + currentWord);
 			return _wordDictionary.SuggestNextWord(currentWord);
+
 		}
 
 		public IEnumerable<string> Next4Words(string currentWord, int numWords )
         {
+			Debug.WriteLine("current 4: " + currentWord);
 			return _wordDictionary.Suggest4(currentWord, numWords);
 		}
 		

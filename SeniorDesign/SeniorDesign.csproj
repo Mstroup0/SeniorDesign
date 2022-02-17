@@ -26,13 +26,36 @@
     <NoStandardLibraries>false</NoStandardLibraries>
     <RootNamespace>SeniorDesign</RootNamespace>
     <AssemblyName>SeniorDesign</AssemblyName>
-    <LoadBehavior>3</LoadBehavior>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <DefineConstants>VSTO40</DefineConstants>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <BootstrapperComponentsLocation>HomeSite</BootstrapperComponentsLocation>
+    <PublishUrl>publish\</PublishUrl>
+    <InstallUrl />
+    <TargetCulture>en</TargetCulture>
+    <ApplicationVersion>1.0.0.0</ApplicationVersion>
+    <AutoIncrementApplicationRevision>true</AutoIncrementApplicationRevision>
+    <UpdateEnabled>true</UpdateEnabled>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>days</UpdateIntervalUnits>
+    <IsWebBootstrapper>False</IsWebBootstrapper>
+    <ProductName>SeniorDesign</ProductName>
+    <PublisherName />
+    <SupportUrl />
+    <FriendlyName>SeniorDesign</FriendlyName>
+    <OfficeApplicationDescription />
+    <LoadBehavior>3</LoadBehavior>
   </PropertyGroup>
   <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.7.2 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
     <BootstrapperPackage Include="Microsoft.VSTORuntime.4.0">
       <Visible>False</Visible>
       <ProductName>Microsoft Visual Studio 2010 Tools for Office Runtime %28x86 and x64%29</ProductName>
@@ -100,6 +123,9 @@
   -->
   <ItemGroup>
     <Reference Include="Accessibility" />
+    <Reference Include="netstandard" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Collections.Specialized, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Collections.Specialized.4.3.0\lib\net46\System.Collections.Specialized.dll</HintPath>
@@ -209,15 +235,12 @@
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="WordPredictionLibrary-master\SuggestWordLibrary\MainForm.cs">
-      <SubType>Form</SubType>
+    <Compile Include="Ribbon1.cs">
+      <SubType>Component</SubType>
     </Compile>
-    <Compile Include="WordPredictionLibrary-master\SuggestWordLibrary\MainForm.Designer.cs">
-      <DependentUpon>MainForm.cs</DependentUpon>
+    <Compile Include="Ribbon1.Designer.cs">
+      <DependentUpon>Ribbon1.cs</DependentUpon>
     </Compile>
-    <Compile Include="WordPredictionLibrary-master\SuggestWordLibrary\Program.cs" />
-    <Compile Include="WordPredictionLibrary-master\SuggestWordLibrary\Properties\Resources.Designer.cs" />
-    <Compile Include="WordPredictionLibrary-master\SuggestWordLibrary\Properties\Settings.Designer.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -227,10 +250,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="WordPredictionLibrary-master\SuggestWordLibrary\MainForm.resx">
-      <DependentUpon>MainForm.cs</DependentUpon>
+    <EmbeddedResource Include="Ribbon1.resx">
+      <DependentUpon>Ribbon1.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="WordPredictionLibrary-master\SuggestWordLibrary\Properties\Resources.resx" />
     <None Include="Core\WordPredictionLibrary\obj\Debug\DesignTimeResolveAssemblyReferencesInput.cache" />
     <None Include="Core\WordPredictionLibrary\obj\Debug\WordPredictionLibrary.csproj.AssemblyReference.cache" />
     <None Include="Core\WordPredictionLibrary\WordPredictionLibrary.csproj" />
@@ -254,11 +276,6 @@
       <DependentUpon>ThisAddIn.Designer.xml</DependentUpon>
     </Compile>
     <AppDesigner Include="Properties\" />
-    <None Include="WordPredictionLibrary-master\SuggestWordLibrary\App.config" />
-    <None Include="WordPredictionLibrary-master\SuggestWordLibrary\obj\Debug\DesignTimeResolveAssemblyReferencesInput.cache" />
-    <None Include="WordPredictionLibrary-master\SuggestWordLibrary\obj\Debug\SuggestWordLibrary.csproj.AssemblyReference.cache" />
-    <None Include="WordPredictionLibrary-master\SuggestWordLibrary\Properties\Settings.settings" />
-    <None Include="WordPredictionLibrary-master\SuggestWordLibrary\SuggestWordLibrary.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Core\WordPredictionLibrary\bin\Debug\" />
@@ -266,15 +283,11 @@
     <Folder Include="Core\WordPredictionLibrary\obj\Debug\TempPE\" />
     <Folder Include="Core\WordPredictionLibrary\obj\Release\" />
     <Folder Include="Core\WordPredictionLibrary\Properties\" />
-    <Folder Include="WordPredictionLibrary-master\SuggestWordLibrary\bin\Debug\" />
-    <Folder Include="WordPredictionLibrary-master\SuggestWordLibrary\bin\Release\" />
-    <Folder Include="WordPredictionLibrary-master\SuggestWordLibrary\obj\Debug\TempPE\" />
-    <Folder Include="WordPredictionLibrary-master\SuggestWordLibrary\obj\Release\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="WordPredictionLibrary-master\Dictionary.txt" />
-    <Content Include="WordPredictionLibrary-master\ReadMe.txt" />
-    <Content Include="WordPredictionLibrary-master\Treasure Island.txt" />
+    <Content Include="Texts\Dictionary.txt" />
+    <Content Include="Texts\ReadMe.txt" />
+    <Content Include="Texts\Treasure Island.txt" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

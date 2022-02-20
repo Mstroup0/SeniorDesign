@@ -77,7 +77,8 @@ namespace SeniorDesign
             if (AskIfSaveFirst())
             {
                 //string selectedFile = ShowFileDialog(openFileDialog);
-                string selectedFile = "C:\\Users\\kuro0\\Source\\Repos\\Mstroup0\\SeniorDesign\\SeniorDesign\\Texts\\Dictionary.txt";
+                //string selectedFile = "C:\\Users\\kuro0\\Source\\Repos\\Mstroup0\\SeniorDesign\\SeniorDesign\\Texts\\Dictionary.txt";
+                string selectedFile = Environment.GetEnvironmentVariable("PREDICTION_DICTIONARY", EnvironmentVariableTarget.Machine);
                 Debug.WriteLine("file " + selectedFile);
                 if (!string.IsNullOrWhiteSpace(selectedFile) && File.Exists(selectedFile))
                 {
@@ -201,7 +202,8 @@ namespace SeniorDesign
            
         private void SaveDataSet()
         {
-            string selectedFile = "C:\\Users\\kuro0\\Source\\Repos\\Mstroup0\\SeniorDesign\\SeniorDesign\\Texts\\Dictionary.txt";
+            //string selectedFile = "C:\\Users\\kuro0\\Source\\Repos\\Mstroup0\\SeniorDesign\\SeniorDesign\\Texts\\Dictionary.txt";
+            string selectedFile = Environment.GetEnvironmentVariable("PREDICTION_DICTIONARY", EnvironmentVariableTarget.Machine);
             if (!string.IsNullOrWhiteSpace(selectedFile))
             {
                 if (TrainedDataSet.SerializeToXml(dataSet, selectedFile))

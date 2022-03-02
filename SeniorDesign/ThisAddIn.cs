@@ -26,40 +26,96 @@ namespace SeniorDesign
         {
         }
 
-        private string Context_Doc()
+        private string GetLastWordsinRange()
         {
-            string textFromDoc = Globals.ThisAddIn.Application.ActiveDocument.Range().Text;
-            string text = "";
-            text += textFromDoc;
-            // Debug.WriteLine( "testing",text);
-            return text;
-        }
+            //cursor starting position
+            int cursorPos = Application.Selection.Start;
+            Debug.WriteLine("Testing starting postion ", cursorPos);
 
-     
+            //Variables
+            string text = "";
+            string textFromDoc = "";
+            int start, end;
+            object startO, endO;
+
+            //Finds the range based off of the text cursors position 
+            if (cursorPos != 0 )
+            {
+                if ((cursorPos - 36) > 0)
+                {
+                    start = cursorPos - 36;
+                }
+                else
+                {
+                    start = 0;
+                }
+                end = cursorPos;
+                
+            }
+            else
+            {
+                start = cursorPos;
+                end = cursorPos;
+            }
+            //Set the start and end of the selection range
+            startO = start;
+            endO = end;
+
+            //gets the selections and inputs as a string 
+            textFromDoc = Globals.ThisAddIn.Application.ActiveDocument.Range(ref startO, ref endO).Text;
+            text += textFromDoc;
+
+            //test printing selection
+            Debug.WriteLine( "Selections Testing: ",text);
+            
+            
+            //Returns the last word
+            return text;
+
+
+        }
+        public string GetLastWord()
+        {
+            string lWord;
+
+            //calls for the string in the range
+            string wordsRange = GetLastWordsinRange();
+            Debug.WriteLine("testing words in range/getlastword:" + wordsRange);
+            
+            // set to another string to keep the og
+            string wordsRange2 = wordsRange;
+            Debug.WriteLine("testing Doc:" + wordsRange2);
+            
+            var words = wordsRange2.Split( ' ', ',', '.', '?', '!', '\n' );
+
+            // gets the last word in the range
+            string lastWord = words.Last().ToString();
+            Debug.WriteLine("testing Doc var.last:" + lastWord);
+
+            // get rid of any white space
+            string noWhite= String.Concat(lastWord.Where(c => !Char.IsWhiteSpace(c)));
+            Debug.WriteLine("testing Doc:" + noWhite);
+            //Sets the last Word
+            lWord = noWhite;
+
+            return lWord;
+        }
+ 
+
         public void Suggest()
         {
             OpenDataSet();
-            Microsoft.Office.Interop.Word._Document oDoc = Globals.ThisAddIn.Application.ActiveDocument;
-            Word.Paragraph objPare;
-             objPare = oDoc.Paragraphs.Add();
 
-            var docCon =  Context_Doc();
-            string docConT = docCon;
-            Debug.WriteLine("testing Doc:" + docCon);
-            string docCon2 = docCon;
-            Debug.WriteLine("testing Doc:" + docCon2);
-            //string docConLast = docCon2.Split(new char[] { ' ', ',', '.', '?', '!', '\n'}).Last();
-            string docConLast2 = String.Concat(docCon2.Where(c => !Char.IsWhiteSpace(c)));
-            string lastW =  docConLast2;
+            string lastWord =  GetLastWord();
+            Debug.WriteLine("testing Doc:" + lastWord);
 
-            Debug.WriteLine("testing Doc:" + lastW);
-            string suggestedWord = dataSet.SuggestNext(lastW);
+            string noWlastWord = String.Concat(lastWord.Where(c => !Char.IsWhiteSpace(c)));
 
+            string suggestedWord = dataSet.SuggestNext(noWlastWord);
             Debug.WriteLine("1 Suggested word:" + suggestedWord);
-            IEnumerable<string> suggestedWords = dataSet.Next4Words(lastW, 4);
+            
+            IEnumerable<string> suggestedWords = dataSet.Next4Words(lastWord, 4);
             words = suggestedWords;
-
-            string suggests = " ";
             foreach (string word in suggestedWords)
             {
                 Debug.WriteLine("4 Suggested word:" + word);
@@ -89,12 +145,10 @@ namespace SeniorDesign
                 }
             }
         }
-
         private void OnDataSetLoaded()
         {
             IsDatasetDirty = false;
         }
-
         private bool AskIfSaveFirst()
         {
             if (dataSet != null && dataSet.TotalSampleSize > 1)
@@ -121,6 +175,7 @@ namespace SeniorDesign
             return true;
         }
 
+        // Prints the suggested word
         public void PUPrintWord(string suggestion) => PrintWord(suggestion);
         private void PrintWord(string suggestion) // Prints word at current possition
         {
@@ -162,43 +217,6 @@ namespace SeniorDesign
             Application.Options.Overtype = userOvertype;
         }
 
-        private void CursorPos1() // possiblility 2
-        {
-
-            Object wordObject = null;
-            Microsoft.Office.Interop.Word.Application word = null;
-            Document document = null;
-
-            try
-            {
-                wordObject = (Microsoft.Office.Interop.Word.Application)System.Runtime.InteropServices.Marshal.GetActiveObject("Word.Application");
-
-                word = (Microsoft.Office.Interop.Word.Application)wordObject;
-                word.Visible = false;
-                word.ScreenUpdating = false;
-                string fullPath = word.ActiveDocument.FullName;
-
-                document = word.ActiveDocument;
-
-                int count = document.Words.Count;
-                for (int k = 1; k <= count; k++)
-                {
-                    string text = document.Words[k].Text;
-                    MessageBox.Show(text);
-                }
-
-                if (document.Paragraphs.Count > 0)
-                {
-                    var paragraph = document.Paragraphs.First;
-                    var lastCharPos = paragraph.Range.Sentences.First.End - 1;
-                    MessageBox.Show(lastCharPos.ToString());
-                }
-            }
-            catch (Exception ex) { 
-            MessageBox.Show(ex.ToString());
-                }
-            }
-           
         private void SaveDataSet()
         {
             string selectedFile = "C:\\Users\\kuro0\\Source\\Repos\\Mstroup0\\SeniorDesign\\SeniorDesign\\Texts\\Dictionary.txt";
@@ -210,11 +228,14 @@ namespace SeniorDesign
                 }
             }
         }
+
+        //Gets Suggested word at specific position
         public string arrayWords(int pos)
         {
             IEnumerable<string> suggestedWords = words;
             return suggestedWords.ElementAt(pos);
         }
+        //Gets the suggestions
         public IEnumerable<string> UpdateLabels()
         {
             return GetSuggestion();

@@ -145,6 +145,7 @@ namespace WordPredictionLibrary.Core
 		{
 			Debug.WriteLine("current2: " + fromWord);
 			fromWord = fromWord.TryToLower();
+			Debug.WriteLine("current2: " + fromWord);
 			if (_internalDictionary.ContainsKey(fromWord))
 			{
 				Debug.WriteLine("current3: " + fromWord);

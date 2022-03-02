@@ -80,8 +80,6 @@ namespace SeniorDesign
                 }
             }
         }
-
-
         private bool AskIfSaveFirst()
         {
             if (dataSet != null && dataSet.TotalSampleSize > 1)

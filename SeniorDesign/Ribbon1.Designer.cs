@@ -47,12 +47,12 @@ namespace SeniorDesign
             this.labelTotalWords = this.Factory.CreateRibbonLabel();
             this.labelUniqueWords = this.Factory.CreateRibbonLabel();
             this.group4 = this.Factory.CreateRibbonGroup();
-            this.group5 = this.Factory.CreateRibbonGroup();
-            this.group6 = this.Factory.CreateRibbonGroup();
-            this.group7 = this.Factory.CreateRibbonGroup();
             this.button1 = this.Factory.CreateRibbonButton();
+            this.group5 = this.Factory.CreateRibbonGroup();
             this.button3 = this.Factory.CreateRibbonButton();
+            this.group6 = this.Factory.CreateRibbonGroup();
             this.button4 = this.Factory.CreateRibbonButton();
+            this.group7 = this.Factory.CreateRibbonGroup();
             this.button5 = this.Factory.CreateRibbonButton();
             group1 = this.Factory.CreateRibbonGroup();
             group1.SuspendLayout();
@@ -132,24 +132,6 @@ namespace SeniorDesign
             this.group4.Label = "Word 1";
             this.group4.Name = "group4";
             // 
-            // group5
-            // 
-            this.group5.Items.Add(this.button3);
-            this.group5.Label = "Word 2";
-            this.group5.Name = "group5";
-            // 
-            // group6
-            // 
-            this.group6.Items.Add(this.button4);
-            this.group6.Label = "Word 3";
-            this.group6.Name = "group6";
-            // 
-            // group7
-            // 
-            this.group7.Items.Add(this.button5);
-            this.group7.Label = "Word 4";
-            this.group7.Name = "group7";
-            // 
             // button1
             // 
             this.button1.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
@@ -157,6 +139,12 @@ namespace SeniorDesign
             this.button1.Name = "button1";
             this.button1.ShowImage = true;
             this.button1.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.button1_Click);
+            // 
+            // group5
+            // 
+            this.group5.Items.Add(this.button3);
+            this.group5.Label = "Word 2";
+            this.group5.Name = "group5";
             // 
             // button3
             // 
@@ -166,6 +154,12 @@ namespace SeniorDesign
             this.button3.ShowImage = true;
             this.button3.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.button3_Click_1);
             // 
+            // group6
+            // 
+            this.group6.Items.Add(this.button4);
+            this.group6.Label = "Word 3";
+            this.group6.Name = "group6";
+            // 
             // button4
             // 
             this.button4.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
@@ -173,6 +167,12 @@ namespace SeniorDesign
             this.button4.Name = "button4";
             this.button4.ShowImage = true;
             this.button4.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.button4_Click);
+            // 
+            // group7
+            // 
+            this.group7.Items.Add(this.button5);
+            this.group7.Label = "Word 4";
+            this.group7.Name = "group7";
             // 
             // button5
             // 

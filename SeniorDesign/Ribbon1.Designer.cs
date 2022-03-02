@@ -13,8 +13,8 @@ namespace SeniorDesign
             : base(Globals.Factory.GetRibbonFactory())
         {
             InitializeComponent();
-           // dataSet = new TrainedDataSet();
-           // IsDatasetDirty = false;
+            // dataSet = new TrainedDataSet();
+            // IsDatasetDirty = false;
         }
 
         /// <summary> 
@@ -39,6 +39,7 @@ namespace SeniorDesign
         private void InitializeComponent()
         {
             Microsoft.Office.Tools.Ribbon.RibbonGroup group1;
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Ribbon1));
             this.StartStop = this.Factory.CreateRibbonToggleButton();
             this.tab1 = this.Factory.CreateRibbonTab();
             this.group3 = this.Factory.CreateRibbonGroup();
@@ -71,6 +72,7 @@ namespace SeniorDesign
             // StartStop
             // 
             this.StartStop.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
+            this.StartStop.Image = ((System.Drawing.Image)(resources.GetObject("StartStop.Image")));
             this.StartStop.Label = "Start";
             this.StartStop.Name = "StartStop";
             this.StartStop.ShowImage = true;

@@ -100,7 +100,35 @@ namespace SeniorDesign
 
             return lWord;
         }
- 
+        public string Get2ndLastWord()
+        {
+            string lWord;
+
+            //calls for the string in the range
+            string wordsRange = GetLastWordsinRange();
+            Debug.WriteLine("testing words in range/getlastword:" + wordsRange);
+
+            // set to another string to keep the og
+            string wordsRange2 = wordsRange;
+            Debug.WriteLine("testing Doc:" + wordsRange2);
+
+            var words = wordsRange2.Split(' ', ',', '.', '?', '!', '\n');
+
+            int size = words.Length;
+            // gets the last word in the range
+            string last2ndWord = words[ size - 2].ToString();
+            Debug.WriteLine("testing Doc var.last:" + last2ndWord);
+
+            // get rid of any white space
+            string noWhite = String.Concat(last2ndWord.Where(c => !Char.IsWhiteSpace(c)));
+            Debug.WriteLine("testing Doc:" + noWhite);
+            //Sets the last Word
+            lWord = noWhite;
+
+            return lWord;
+        }
+
+
 
         public void Suggest()
         {
@@ -116,6 +144,19 @@ namespace SeniorDesign
             
             IEnumerable<string> suggestedWords = dataSet.Next4Words(lastWord, 4);
             words = suggestedWords;
+
+            if (!suggestedWords.Any())
+            { 
+                string last2Word = GetLastWord();
+                Debug.WriteLine("testing Doc:" + last2Word);
+
+                string noWlast2Word = String.Concat(last2Word.Where(c => !Char.IsWhiteSpace(c)));
+
+                string suggested2Word = dataSet.SuggestNext(noWlast2Word);
+                Debug.WriteLine("1 Suggested word:" + suggested2Word);
+                suggestedWords = dataSet.Next4Words(last2Word, 4);
+
+            }
             foreach (string word in suggestedWords)
             {
                 Debug.WriteLine("4 Suggested word:" + word);

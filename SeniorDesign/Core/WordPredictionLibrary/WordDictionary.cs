@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Text;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace WordPredictionLibrary.Core
 {
@@ -142,9 +143,12 @@ namespace WordPredictionLibrary.Core
 
 		public string SuggestNextWord(string fromWord)
 		{
+			Debug.WriteLine("current2: " + fromWord);
 			fromWord = fromWord.TryToLower();
+			Debug.WriteLine("current2: " + fromWord);
 			if (_internalDictionary.ContainsKey(fromWord))
 			{
+				Debug.WriteLine("current3: " + fromWord);
 				return _internalDictionary[fromWord].SuggestNextWord();
 			}
 			return string.Empty;
@@ -152,6 +156,7 @@ namespace WordPredictionLibrary.Core
 
 		public IEnumerable<string> Suggest4(string fromWord, int quantity)
         {
+			Debug.WriteLine("current2: " + fromWord);
 			fromWord = fromWord.TryToLower();
 			if (_internalDictionary.ContainsKey(fromWord))
 			{

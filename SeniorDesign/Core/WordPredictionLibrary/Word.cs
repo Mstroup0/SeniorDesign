@@ -100,6 +100,7 @@ namespace WordPredictionLibrary.Core
 
 		public string SuggestNextWord()
 		{
+			
 			return _nextWordDictionary.GetNextWord();
 		}
 

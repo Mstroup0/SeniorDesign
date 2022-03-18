@@ -1,7 +1,9 @@
 ﻿using Microsoft.Office.Tools.Ribbon;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Windows.Forms;
 using System.Windows.Input;
 using WordPredictionLibrary.Core;
@@ -15,6 +17,7 @@ namespace SeniorDesign
         bool IsDatasetDirty { get; set; }
         TrainedDataSet dataSet { get; set; }
         public bool spaceK;
+        bool running = false;
         private void Ribbon1_Load(object sender, RibbonUIEventArgs e)
         {
             
@@ -28,17 +31,21 @@ namespace SeniorDesign
             // bool on = false;
             //while (StartStop.Checked == true) 
             //{ 
-                if (StartStop.Checked == true)
-                {
-                    StartStop.Label = string.Format("Stop");
-                    loadLabels();
+            if (StartStop.Checked == true)
+            {
+                StartStop.Label = string.Format("Stop");
+                //loadLabels();
+                running = true;
+                Thread thr1 = new Thread(loadLabels);
+                thr1.Start();    
                     
-                }
-                else
-                {
-                    StartStop.Label = string.Format("Start");
-                    //break;
-                }
+            }
+            else
+            {
+                StartStop.Label = string.Format("Start");
+                running = false;
+                //break;
+            }
             //}
 
         }
@@ -54,12 +61,15 @@ namespace SeniorDesign
 
         private void loadLabels()
         {
-            Globals.ThisAddIn.Suggest();
-            IEnumerable<string> labels = Globals.ThisAddIn.UpdateLabels();
-            b1Word.Label = string.Format(labels.ElementAt(0));
-            b2Word.Label = string.Format(labels.ElementAt(1));
-            b3Word.Label = string.Format(labels.ElementAt(2));
-            b4Word.Label = string.Format(labels.ElementAt(3));
+            while (running == true)
+            {
+                Globals.ThisAddIn.Suggest();
+                IEnumerable<string> labels = Globals.ThisAddIn.UpdateLabels();
+                b1Word.Label = string.Format(labels.ElementAt(0));
+                b2Word.Label = string.Format(labels.ElementAt(1));
+                b3Word.Label = string.Format(labels.ElementAt(2));
+                b4Word.Label = string.Format(labels.ElementAt(3));
+            }
         }
         private void OnDataSetLoaded()
         {
@@ -78,7 +88,8 @@ namespace SeniorDesign
             if (AskIfSaveFirst())
             {
                 //string selectedFile = ShowFileDialog(openFileDialog);
-                string selectedFile = "..\\..\\Texts\\Dictionary.txt";
+                //string selectedFile = "..\\..\\Texts\\Dictionary.txt";
+                string selectedFile = Environment.GetEnvironmentVariable("PREDICTION_DICTIONARY", EnvironmentVariableTarget.Machine);
                 //Debug.WriteLine("file " + selectedFile);
                 if (!string.IsNullOrWhiteSpace(selectedFile) && File.Exists(selectedFile))
                 {
@@ -117,7 +128,8 @@ namespace SeniorDesign
         }
         private void SaveDataSet()
         {
-            string selectedFile = "..\\..\\..\\Texts\\Dictionary.txt";
+            //string selectedFile = "..\\..\\..\\Texts\\Dictionary.txt";
+            string selectedFile = Environment.GetEnvironmentVariable("PREDICTION_DICTIONARY", EnvironmentVariableTarget.Machine);
             if (!string.IsNullOrWhiteSpace(selectedFile))
             {
                 if (TrainedDataSet.SerializeToXml(dataSet, selectedFile))

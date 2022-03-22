@@ -66,7 +66,7 @@ namespace SeniorDesign
             // group1
             // 
             group1.Items.Add(this.StartStop);
-            group1.Label = "group1";
+            group1.Label = "Start Program";
             group1.Name = "group1";
             // 
             // StartStop
@@ -77,7 +77,6 @@ namespace SeniorDesign
             this.StartStop.Name = "StartStop";
             this.StartStop.ShowImage = true;
             this.StartStop.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.StartStop_Click);
-
             // 
             // tab1
             // 

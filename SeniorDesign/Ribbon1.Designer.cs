@@ -40,18 +40,18 @@ namespace SeniorDesign
         {
             Microsoft.Office.Tools.Ribbon.RibbonGroup group1;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Ribbon1));
-            this.StartStop = this.Factory.CreateRibbonToggleButton();
             this.tab1 = this.Factory.CreateRibbonTab();
             this.group3 = this.Factory.CreateRibbonGroup();
             this.labelTotalWords = this.Factory.CreateRibbonLabel();
             this.labelUniqueWords = this.Factory.CreateRibbonLabel();
             this.group4 = this.Factory.CreateRibbonGroup();
-            this.b1Word = this.Factory.CreateRibbonButton();
             this.group5 = this.Factory.CreateRibbonGroup();
-            this.b2Word = this.Factory.CreateRibbonButton();
             this.group6 = this.Factory.CreateRibbonGroup();
-            this.b3Word = this.Factory.CreateRibbonButton();
             this.group7 = this.Factory.CreateRibbonGroup();
+            this.StartStop = this.Factory.CreateRibbonToggleButton();
+            this.b1Word = this.Factory.CreateRibbonButton();
+            this.b2Word = this.Factory.CreateRibbonButton();
+            this.b3Word = this.Factory.CreateRibbonButton();
             this.b4Word = this.Factory.CreateRibbonButton();
             group1 = this.Factory.CreateRibbonGroup();
             group1.SuspendLayout();
@@ -66,17 +66,8 @@ namespace SeniorDesign
             // group1
             // 
             group1.Items.Add(this.StartStop);
-            group1.Label = "group1";
+            group1.Label = "Start Program";
             group1.Name = "group1";
-            // 
-            // StartStop
-            // 
-            this.StartStop.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
-            this.StartStop.Image = ((System.Drawing.Image)(resources.GetObject("StartStop.Image")));
-            this.StartStop.Label = "Start";
-            this.StartStop.Name = "StartStop";
-            this.StartStop.ShowImage = true;
-            this.StartStop.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.StartStop_Click);
             // 
             // tab1
             // 
@@ -116,6 +107,33 @@ namespace SeniorDesign
             this.group4.Label = "Word 1";
             this.group4.Name = "group4";
             // 
+            // group5
+            // 
+            this.group5.Items.Add(this.b2Word);
+            this.group5.Label = "Word 2";
+            this.group5.Name = "group5";
+            // 
+            // group6
+            // 
+            this.group6.Items.Add(this.b3Word);
+            this.group6.Label = "Word 3";
+            this.group6.Name = "group6";
+            // 
+            // group7
+            // 
+            this.group7.Items.Add(this.b4Word);
+            this.group7.Label = "Word 4";
+            this.group7.Name = "group7";
+            // 
+            // StartStop
+            // 
+            this.StartStop.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
+            this.StartStop.Image = ((System.Drawing.Image)(resources.GetObject("StartStop.Image")));
+            this.StartStop.Label = "Start";
+            this.StartStop.Name = "StartStop";
+            this.StartStop.ShowImage = true;
+            this.StartStop.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.StartStop_Click);
+            // 
             // b1Word
             // 
             this.b1Word.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
@@ -123,12 +141,6 @@ namespace SeniorDesign
             this.b1Word.Name = "b1Word";
             this.b1Word.ShowImage = true;
             this.b1Word.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.b1Word_Click);
-            // 
-            // group5
-            // 
-            this.group5.Items.Add(this.b2Word);
-            this.group5.Label = "Word 2";
-            this.group5.Name = "group5";
             // 
             // b2Word
             // 
@@ -138,12 +150,6 @@ namespace SeniorDesign
             this.b2Word.ShowImage = true;
             this.b2Word.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.b2Word_Click);
             // 
-            // group6
-            // 
-            this.group6.Items.Add(this.b3Word);
-            this.group6.Label = "Word 3";
-            this.group6.Name = "group6";
-            // 
             // b3Word
             // 
             this.b3Word.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
@@ -151,12 +157,6 @@ namespace SeniorDesign
             this.b3Word.Name = "b3Word";
             this.b3Word.ShowImage = true;
             this.b3Word.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.b3Word_Click);
-            // 
-            // group7
-            // 
-            this.group7.Items.Add(this.b4Word);
-            this.group7.Label = "Word 4";
-            this.group7.Name = "group7";
             // 
             // b4Word
             // 

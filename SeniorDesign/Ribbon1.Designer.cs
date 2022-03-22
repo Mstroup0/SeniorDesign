@@ -77,6 +77,7 @@ namespace SeniorDesign
             this.StartStop.Name = "StartStop";
             this.StartStop.ShowImage = true;
             this.StartStop.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.StartStop_Click);
+
             // 
             // tab1
             // 

@@ -3,7 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Windows.Forms;
+using System.Windows.Input;
 using WordPredictionLibrary.Core;
 
 
@@ -14,7 +16,8 @@ namespace SeniorDesign
 
         bool IsDatasetDirty { get; set; }
         TrainedDataSet dataSet { get; set; }
-
+        public bool spaceK;
+        bool running = false;
         private void Ribbon1_Load(object sender, RibbonUIEventArgs e)
         {
             
@@ -26,20 +29,24 @@ namespace SeniorDesign
             IsDatasetDirty = false;
             OpenDataSet();
             // bool on = false;
+            //while (StartStop.Checked == true) 
+            //{ 
             if (StartStop.Checked == true)
             {
                 StartStop.Label = string.Format("Stop");
-                Globals.ThisAddIn.Suggest();
-                IEnumerable<string> labels = Globals.ThisAddIn.UpdateLabels();
-                b1Word.Label = string.Format(labels.ElementAt(0));
-                b2Word.Label = string.Format(labels.ElementAt(1));
-                b3Word.Label = string.Format(labels.ElementAt(2));
-                b4Word.Label = string.Format(labels.ElementAt(3));
+                //loadLabels();
+                running = true;
+                Thread thr1 = new Thread(loadLabels);
+                thr1.Start();    
+                    
             }
             else
             {
                 StartStop.Label = string.Format("Start");
+                running = false;
+                //break;
             }
+            //}
 
         }
         /*  private void button2_Click(object sender, RibbonControlEventArgs e)
@@ -52,6 +59,18 @@ namespace SeniorDesign
           }
         */
 
+        private void loadLabels()
+        {
+            while (running == true)
+            {
+                Globals.ThisAddIn.Suggest();
+                IEnumerable<string> labels = Globals.ThisAddIn.UpdateLabels();
+                b1Word.Label = string.Format(labels.ElementAt(0));
+                b2Word.Label = string.Format(labels.ElementAt(1));
+                b3Word.Label = string.Format(labels.ElementAt(2));
+                b4Word.Label = string.Format(labels.ElementAt(3));
+            }
+        }
         private void OnDataSetLoaded()
         {
             labelTotalWords.Visible = true;

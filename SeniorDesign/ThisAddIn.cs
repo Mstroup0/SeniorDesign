@@ -188,39 +188,41 @@ namespace SeniorDesign
             string suggestedWord = dataSet.SuggestNext(noWlastWord);
             Debug.WriteLine("1 Suggested word:" + suggestedWord);
             
-            IEnumerable<string> suggestedWords = dataSet.Next4Words(lastWord, 4);
-            words = suggestedWords;
-
-            if (!suggestedWords.Any())
+            IEnumerable<string> suggestedWords1 = dataSet.Next4Words(lastWord, 8);
+            
+            if (!suggestedWords1.Any())
             { 
                 string last2Word = GetLastWord();
                 Debug.WriteLine("testing Doc:" + last2Word);
 
                 string noWlast2Word = String.Concat(last2Word.Where(c => !Char.IsWhiteSpace(c)));
 
-                string suggested2Word = dataSet.SuggestNext(noWlast2Word);
-                Debug.WriteLine("1 Suggested word:" + suggested2Word);
-                suggestedWords = dataSet.Next4Words(last2Word, 4);
+                string suggested2Word1 = dataSet.SuggestNext(noWlast2Word);
+                Debug.WriteLine("1 Suggested word:" + suggested2Word1);
+                suggestedWords1 = dataSet.Next4Words(last2Word, 8);
+
 
             }
-            foreach (string word in suggestedWords)
+            List<string> wordsAsList = suggestedWords1.ToList();
+            wordsAsList.Remove("{{end}}");
+
+            foreach (string word in suggestedWords1)
             {
                 Debug.WriteLine("4 Suggested word:" + word);
             }
+                // docConT += " " + suggestedWord;
+                // docConT += " " + suggests;
 
-           // docConT += " " + suggestedWord;
-           // docConT += " " + suggests;
+                // objPare.Range.Text += docConT;
 
-           // objPare.Range.Text += docConT;
-          
+                words = wordsAsList.AsEnumerable();
         }
 
         private void OpenDataSet()
         {
             if (AskIfSaveFirst())
             {
-                //string selectedFile = ShowFileDialog(openFileDialog);
-                string selectedFile = "C:\\Users\\dany_\\Source\\Repos\\Mstroup0\\SeniorDesign\\SeniorDesign\\Texts\\Dictionary.txt";
+                string selectedFile = Environment.GetEnvironmentVariable("PREDICTION_DICTIONARY", EnvironmentVariableTarget.Machine);
                 Debug.WriteLine("file " + selectedFile);
                 if (!string.IsNullOrWhiteSpace(selectedFile) && File.Exists(selectedFile))
                 {

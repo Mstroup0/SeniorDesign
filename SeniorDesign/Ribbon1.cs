@@ -125,7 +125,7 @@ namespace SeniorDesign
         }
         private void SaveDataSet()
         {
-            string selectedFile = "..\\..\\..\\Texts\\Dictionary.txt";
+            string selectedFile = Environment.GetEnvironmentVariable("PREDICTION_DICTIONARY", EnvironmentVariableTarget.Machine);
             if (!string.IsNullOrWhiteSpace(selectedFile))
             {
                 if (TrainedDataSet.SerializeToXml(dataSet, selectedFile))

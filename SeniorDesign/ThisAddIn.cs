@@ -220,7 +220,7 @@ namespace SeniorDesign
             if (AskIfSaveFirst())
             {
                 //string selectedFile = ShowFileDialog(openFileDialog);
-                string selectedFile = "C:\\Users\\dany_\\Source\\Repos\\Mstroup0\\SeniorDesign\\SeniorDesign\\Texts\\Dictionary.txt";
+                string selectedFile = Environment.GetEnvironmentVariable("PREDICTION_DICTIONARY", EnvironmentVariableTarget.Machine);
                 Debug.WriteLine("file " + selectedFile);
                 if (!string.IsNullOrWhiteSpace(selectedFile) && File.Exists(selectedFile))
                 {

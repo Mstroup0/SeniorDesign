@@ -87,9 +87,7 @@ namespace SeniorDesign
         {
             if (AskIfSaveFirst())
             {
-                //string selectedFile = ShowFileDialog(openFileDialog);
-                string selectedFile = "..\\..\\Texts\\Dictionary.txt";
-                //Debug.WriteLine("file " + selectedFile);
+                string selectedFile = Environment.GetEnvironmentVariable("PREDICTION_DICTIONARY", EnvironmentVariableTarget.Machine);
                 if (!string.IsNullOrWhiteSpace(selectedFile) && File.Exists(selectedFile))
                 {
                     dataSet = TrainedDataSet.DeserializeFromXml(selectedFile);

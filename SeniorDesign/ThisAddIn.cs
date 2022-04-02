@@ -23,6 +23,7 @@ namespace SeniorDesign
         private KeyboardHook hook2 = new KeyboardHook();
         private KeyboardHook hook3 = new KeyboardHook();
         private KeyboardHook hook4 = new KeyboardHook();
+ 
 
         private void ThisAddIn_Startup(object sender, System.EventArgs e)
         {
@@ -85,7 +86,7 @@ namespace SeniorDesign
             object startO, endO;
 
             //Finds the range based off of the text cursors position 
-            if (cursorPos != 0 )
+            if (cursorPos != 0)
             {
                 if ((cursorPos - 36) > 0)
                 {
@@ -96,7 +97,7 @@ namespace SeniorDesign
                     start = 0;
                 }
                 end = cursorPos;
-                
+
             }
             else
             {
@@ -112,9 +113,9 @@ namespace SeniorDesign
             text += textFromDoc;
 
             //test printing selection
-            Debug.WriteLine( "Selections Testing: ",text);
-            
-            
+            Debug.WriteLine("Selections Testing: ", text);
+
+
             //Returns the last word
             return text;
 
@@ -127,19 +128,19 @@ namespace SeniorDesign
             //calls for the string in the range
             string wordsRange = GetLastWordsinRange();
             Debug.WriteLine("testing words in range/getlastword:" + wordsRange);
-            
+
             // set to another string to keep the og
             string wordsRange2 = wordsRange;
             Debug.WriteLine("testing Doc:" + wordsRange2);
-            
-            var words = wordsRange2.Split( ' ', ',', '.', '?', '!', '\n' );
+
+            var words = wordsRange2.Split(' ', ',', '.', '?', '!', '\n');
 
             // gets the last word in the range
             string lastWord = words.Last().ToString();
             Debug.WriteLine("testing Doc var.last:" + lastWord);
 
             // get rid of any white space
-            string noWhite= String.Concat(lastWord.Where(c => !Char.IsWhiteSpace(c)));
+            string noWhite = String.Concat(lastWord.Where(c => !Char.IsWhiteSpace(c)));
             Debug.WriteLine("testing Doc:" + noWhite);
             //Sets the last Word
             lWord = noWhite;
@@ -162,7 +163,7 @@ namespace SeniorDesign
 
             int size = words.Length;
             // gets the last word in the range
-            string last2ndWord = words[ size - 2].ToString();
+            string last2ndWord = words[size - 2].ToString();
             Debug.WriteLine("testing Doc var.last:" + last2ndWord);
 
             // get rid of any white space
@@ -179,30 +180,32 @@ namespace SeniorDesign
         public void Suggest()
         {
             OpenDataSet();
+            string noWlast2Word;
 
-            string lastWord =  GetLastWord();
+            string lastWord = GetLastWord();
             Debug.WriteLine("testing Doc:" + lastWord);
 
             string noWlastWord = String.Concat(lastWord.Where(c => !Char.IsWhiteSpace(c)));
 
-            string suggestedWord = dataSet.SuggestNext(noWlastWord);
-            Debug.WriteLine("1 Suggested word:" + suggestedWord);
-            
-            IEnumerable<string> suggestedWords1 = dataSet.Next4Words(lastWord, 8);
-            
+            IEnumerable<string> suggestedWords1 = dataSet.Next4Words(noWlastWord, 8);
+
+
             if (!suggestedWords1.Any())
-            { 
+            {
                 string last2Word = GetLastWord();
                 Debug.WriteLine("testing Doc:" + last2Word);
 
-                string noWlast2Word = String.Concat(last2Word.Where(c => !Char.IsWhiteSpace(c)));
+                noWlast2Word = String.Concat(last2Word.Where(c => !Char.IsWhiteSpace(c)));
 
-                string suggested2Word1 = dataSet.SuggestNext(noWlast2Word);
-                Debug.WriteLine("1 Suggested word:" + suggested2Word1);
-                suggestedWords1 = dataSet.Next4Words(last2Word, 8);
-
+                suggestedWords1 = dataSet.Next4Words(noWlast2Word, 8);
 
             }
+            else
+            {
+                noWlast2Word = "";
+            }
+            checkDictionary(noWlastWord, noWlast2Word);
+
             List<string> wordsAsList = suggestedWords1.ToList();
             wordsAsList.Remove("{{end}}");
 
@@ -210,14 +213,33 @@ namespace SeniorDesign
             {
                 Debug.WriteLine("4 Suggested word:" + word);
             }
-                // docConT += " " + suggestedWord;
-                // docConT += " " + suggests;
 
-                // objPare.Range.Text += docConT;
-
-                words = wordsAsList.AsEnumerable();
+            words = wordsAsList.AsEnumerable();
         }
 
+        public void checkDictionary(String word1In, String word2In)
+         {
+            
+           string word1 = word1In.TryToLower();
+            string word2 = word2In.TryToLower();
+            List<string> W12 = new List<string>();
+            
+                if (word2 != null)
+                {
+                    W12.Add(word2);
+                     W12.Add(word1);
+                    dataSet.TrainS(W12);
+                }
+                else
+                {
+                    W12.Add("");
+                    W12.Add(word1);
+                    dataSet.TrainS(W12);
+                }
+         }
+
+
+        //Train(List<string> sentence)
         private void OpenDataSet()
         {
             if (AskIfSaveFirst())

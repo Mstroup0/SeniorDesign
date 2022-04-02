@@ -40,11 +40,12 @@ namespace WordPredictionLibrary.Core
 			}
 		}
 
-		#endregion
 
-		#region Constructors & ToString
+        #endregion
 
-		public WordDictionary()
+        #region Constructors & ToString
+
+        public WordDictionary()
 		{
 			_internalDictionary = new Dictionary<string, Word>();
 			isOrdered = false;
@@ -108,6 +109,26 @@ namespace WordPredictionLibrary.Core
 			}
 			Add(lastWord, EndPlaceholder);
 		}
+		public void TrainS(List<string> sentence)
+		{
+			if (sentence == null || sentence.Count < 1) { return; }
+			sentence = sentence.Where(s => !string.IsNullOrWhiteSpace(s)).ToList();
+
+			string lastWord = string.Empty;
+			foreach (string word in sentence)
+			{
+				if (string.IsNullOrWhiteSpace(word))
+				{
+					continue;
+				}
+				if (!string.IsNullOrEmpty(lastWord))
+				{
+					Add(lastWord, word);
+				}
+				lastWord = word;
+			}
+			Add(lastWord, EndPlaceholder);
+		}
 
 		internal void Add(string current, string next)
 		{
@@ -121,7 +142,7 @@ namespace WordPredictionLibrary.Core
 			CreateIfRequired(currentLower);
 			CreateIfRequired(nextLower);
 			Word currentWord = _internalDictionary[currentLower];
-			//currentWord.AddNextWord(_internalDictionary[nextLower]);
+			currentWord.AddNextWord(_internalDictionary[nextLower]);
 		}
 
 		private void CreateIfRequired(string word)

@@ -51,6 +51,11 @@ namespace WordPredictionLibrary.Core
 			List<List<string>> paragraphs = TokenizeTextFile(paragraphFile.FullName);
 			_wordDictionary.Train(paragraphs);
 		}
+
+		public void TrainS(List<string> sentences)
+        {
+			_wordDictionary.Train(sentences);
+		}
 			
 		#endregion
 

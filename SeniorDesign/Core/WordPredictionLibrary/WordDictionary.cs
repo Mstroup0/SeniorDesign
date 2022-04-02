@@ -121,7 +121,7 @@ namespace WordPredictionLibrary.Core
 			CreateIfRequired(currentLower);
 			CreateIfRequired(nextLower);
 			Word currentWord = _internalDictionary[currentLower];
-			currentWord.AddNextWord(_internalDictionary[nextLower]);
+			//currentWord.AddNextWord(_internalDictionary[nextLower]);
 		}
 
 		private void CreateIfRequired(string word)

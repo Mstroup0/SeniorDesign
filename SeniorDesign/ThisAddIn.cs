@@ -102,14 +102,14 @@ namespace SeniorDesign
             else
             {
                 start = cursorPos;
-                end = cursorPos;
+                end = cursorPos + 36;
             }
             //Set the start and end of the selection range
             startO = start;
             endO = end;
 
             //gets the selections and inputs as a string 
-            textFromDoc = Globals.ThisAddIn.Application.ActiveDocument.Range(ref startO, ref endO).Text;
+            textFromDoc = Globals.ThisAddIn.Application.ActiveDocument.Range(ref startO, ref endO).Text.ToString();
             text += textFromDoc;
 
             //test printing selection
@@ -133,8 +133,17 @@ namespace SeniorDesign
             string wordsRange2 = wordsRange;
             Debug.WriteLine("testing Doc:" + wordsRange2);
 
-            var words = wordsRange2.Split(' ', ',', '.', '?', '!', '\n');
-
+            char[] delimiter = { ' ', ',', '.', '?', '!', '\n' };
+            string[] words = wordsRange2.Split(delimiter);
+            foreach (var word in words)
+            {
+                Debug.WriteLine("testing Doc var.last:" + word);
+            }
+            words = words.Where(x => !string.IsNullOrEmpty(x)).ToArray();
+            foreach (var word in words)
+            {
+                Debug.WriteLine("testing Doc var.last:" + word);
+            }
             // gets the last word in the range
             string lastWord = words.Last().ToString();
             Debug.WriteLine("testing Doc var.last:" + lastWord);
@@ -159,11 +168,11 @@ namespace SeniorDesign
             string wordsRange2 = wordsRange;
             Debug.WriteLine("testing Doc:" + wordsRange2);
 
-            var words = wordsRange2.Split(' ', ',', '.', '?', '!', '\n');
+            string[] words = wordsRange2.Split(' ', ',', '.', '?', '!', '\n');
 
             int size = words.Length;
             // gets the last word in the range
-            string last2ndWord = words[size - 2].ToString();
+            string last2ndWord = words[size - 3].ToString();
             Debug.WriteLine("testing Doc var.last:" + last2ndWord);
 
             // get rid of any white space

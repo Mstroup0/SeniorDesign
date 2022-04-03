@@ -167,9 +167,17 @@ namespace SeniorDesign
             // set to another string to keep the og
             string wordsRange2 = wordsRange;
             Debug.WriteLine("testing Doc:" + wordsRange2);
-
-            string[] words = wordsRange2.Split(' ', ',', '.', '?', '!', '\n');
-
+            char[] delimiter = { ' ', ',', '.', '?', '!', '\n' };
+            string[] words = wordsRange2.Split(delimiter);
+            foreach (var word in words)
+            {
+                Debug.WriteLine("testing Doc var.last:" + word);
+            }
+            words = words.Where(x => !string.IsNullOrEmpty(x)).ToArray();
+            foreach (var word in words)
+            {
+                Debug.WriteLine("testing Doc var.last:" + word);
+            }
             int size = words.Length;
             // gets the last word in the range
             string last2ndWord = words[size - 3].ToString();

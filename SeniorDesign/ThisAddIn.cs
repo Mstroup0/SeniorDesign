@@ -321,8 +321,8 @@ namespace SeniorDesign
             // Test to see if selection is an insertion point.
             if (currentSelection.Type == Word.WdSelectionType.wdSelectionIP)
             {
-                currentSelection.TypeText(suggestion);
-                currentSelection.TypeParagraph();
+                currentSelection.TypeText(suggestion + " ");
+               // currentSelection.TypeParagraph();
             }
             else
                 if (currentSelection.Type == Word.WdSelectionType.wdSelectionNormal)
@@ -333,8 +333,8 @@ namespace SeniorDesign
                     object direction = Word.WdCollapseDirection.wdCollapseStart;
                     currentSelection.Collapse(ref direction);
                 }
-                currentSelection.TypeText(suggestion);
-                currentSelection.TypeParagraph();
+                currentSelection.TypeText(suggestion + " ");
+                //currentSelection.Type();
             }
             else
             {

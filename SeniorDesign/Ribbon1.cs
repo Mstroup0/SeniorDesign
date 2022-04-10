@@ -64,11 +64,15 @@ namespace SeniorDesign
             while (running == true)
             {
                 Globals.ThisAddIn.Suggest();
-                IEnumerable<string> labels = Globals.ThisAddIn.UpdateLabels();
-                b1Word.Label = string.Format(labels.ElementAt(0));
-                b2Word.Label = string.Format(labels.ElementAt(1));
-                b3Word.Label = string.Format(labels.ElementAt(2));
-                b4Word.Label = string.Format(labels.ElementAt(3));
+                //IEnumerable<string> labels = Globals.ThisAddIn.UpdateLabels();
+                List<string> labels = Globals.ThisAddIn.UpdateLabels().ToList();
+                if (labels.Capacity >= 4)
+                {
+                    b1Word.Label = string.Format(labels.ElementAt(0));
+                    b2Word.Label = string.Format(labels.ElementAt(1));
+                    b3Word.Label = string.Format(labels.ElementAt(2));
+                    b4Word.Label = string.Format(labels.ElementAt(3));
+                }
             }
         }
         private void OnDataSetLoaded()

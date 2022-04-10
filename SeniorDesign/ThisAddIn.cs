@@ -108,9 +108,8 @@ namespace SeniorDesign
             startO = start;
             endO = end;
 
-            //gets the selections and inputs as a string 
-            textFromDoc = Globals.ThisAddIn.Application.ActiveDocument.Range(ref startO, ref endO).Text.ToString();
-            text += textFromDoc;
+                textFromDoc = Globals.ThisAddIn.Application.ActiveDocument.Range(ref startO, ref endO).Text.ToString();
+                text += textFromDoc;
 
             //test printing selection
             Debug.WriteLine("Selections Testing: ", text);
@@ -133,7 +132,7 @@ namespace SeniorDesign
             string wordsRange2 = wordsRange;
             Debug.WriteLine("testing Doc:" + wordsRange2);
 
-            char[] delimiter = { ' ', ',', '.', '?', '!', '\n' };
+            char[] delimiter = { ' ', ',', '.', '?', '\n', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '-', '-', '=', '+', '[', '{', ']', '}', ';', ';', '"', '<', '>' };
             string[] words = wordsRange2.Split(delimiter);
             foreach (var word in words)
             {
@@ -221,7 +220,8 @@ namespace SeniorDesign
             {
                 noWlast2Word = "";
             }
-            checkDictionary(noWlastWord, noWlast2Word);
+
+            suggestedWords1 =  checkDictionary(noWlastWord, noWlast2Word);
 
             List<string> wordsAsList = suggestedWords1.ToList();
             wordsAsList.Remove("{{end}}");
@@ -234,11 +234,13 @@ namespace SeniorDesign
             words = wordsAsList.AsEnumerable();
         }
 
-        public void checkDictionary(String word1In, String word2In)
+        public IEnumerable<string> checkDictionary(String word1In, String word2In)
          {
             
            string word1 = word1In.TryToLower();
             string word2 = word2In.TryToLower();
+            IEnumerable<string> suggestedWords1;
+
             List<string> W12 = new List<string>();
             
                 if (word2 != null)
@@ -246,13 +248,19 @@ namespace SeniorDesign
                     W12.Add(word2);
                      W12.Add(word1);
                     dataSet.TrainS(W12);
-                }
+                    string noWlastWord = String.Concat(word1In.Where(c => !Char.IsWhiteSpace(c)));
+                     suggestedWords1 = dataSet.Next4Words(noWlastWord, 8);
+            }
                 else
                 {
                     W12.Add("");
                     W12.Add(word1);
                     dataSet.TrainS(W12);
-                }
+                    string noWlastWord = String.Concat(word1In.Where(c => !Char.IsWhiteSpace(c)));
+                    suggestedWords1 = dataSet.Next4Words(noWlastWord, 8);
+            }
+
+            return suggestedWords1;
          }
 
 

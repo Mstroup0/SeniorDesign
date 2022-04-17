@@ -3,7 +3,9 @@
 Our goal as a group is to develop a predictive text add-on for Word, with the intent to help with the writing process and give suggestions for the next word. Our aim is to develop the add-on to work with Microsoft Word to display several suggestions of words based on a typeds word. The add-on will need to be accurate and easy to use. The overall focus of the project is to plan, design and create solutions to help prevent spelling errors while typing. For this project, the client is Dr. Anthony Choi, who is a Mercer University professor of Electrical and Computer Engineering, with research in artificial intelligence.
 
 To read more on this project consider reading the PDR followed by the CDR. 
+
 PDR: https://docs.google.com/document/d/17clWQDY3vQ8_Np3dBVxSqhNz4n0xTqNMg41BjRS8zv4/edit?usp=sharing
+
 CDR: https://docs.google.com/document/d/1ecb4XbAPP6eleZTeBM9NCXjE0d7a_LczmjZykhigQVM/edit?usp=sharing
 
 Contributors

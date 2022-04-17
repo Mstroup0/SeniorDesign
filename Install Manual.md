@@ -4,7 +4,7 @@ To do so in the installer for Visual Studio click on modfiy
 ![image](https://user-images.githubusercontent.com/83418612/163732774-c590297e-0277-47d6-bce3-ded00527272c.png)
 
 Then makesure the following blocks are selected under Desktop & Mobile
-
+(Note: you do not need the Desktop Development with C++)
 ![image](https://user-images.githubusercontent.com/83418612/163732787-cb43c970-e543-417e-abdb-7b3ba2f4b7ce.png)
 
 Then under other toolsets makesure  Office/sharepoint development is selected
